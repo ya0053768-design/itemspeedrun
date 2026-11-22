@@ -1,0 +1,24 @@
+{
+	"schemaVersion": 1,
+	"id": "itemspeedrun",
+	"version": "${version}",
+	"name": "Item Speedrun",
+	"description": "Команда /itemrun выдаёт случайный предмет, который можно добыть в выживании, и запускает секундомер до момента, когда предмет окажется в инвентаре.",
+	"authors": [],
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"ru.itemspeedrun.ItemSpeedrunMod"
+		],
+		"client": [
+			"ru.itemspeedrun.client.ItemSpeedrunClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
