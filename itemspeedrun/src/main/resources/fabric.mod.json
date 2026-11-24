@@ -3,7 +3,7 @@
 	"id": "itemspeedrun",
 	"version": "${version}",
 	"name": "Item Speedrun",
-	"description": "Команда /itemrun выдаёт случайный предмет, который можно добыть в выживании, и запускает секундомер до момента, когда предмет окажется в инвентаре.",
+	"description": "Спидран случайного предмета: колесо предметов перед созданием мира, усложнения, секундомер с иконкой, статистика и сид в чате.",
 	"authors": [],
 	"license": "MIT",
 	"environment": "*",
@@ -15,6 +15,12 @@
 			"ru.itemspeedrun.client.ItemSpeedrunClient"
 		]
 	},
+	"mixins": [
+		{
+			"config": "itemspeedrun.client.mixins.json",
+			"environment": "client"
+		}
+	],
 	"depends": {
 		"fabricloader": ">=0.19.5",
 		"minecraft": "~26.3",

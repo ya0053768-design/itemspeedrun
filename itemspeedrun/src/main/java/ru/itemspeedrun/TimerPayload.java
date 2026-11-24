@@ -11,11 +11,12 @@ import net.minecraft.world.item.Item;
 /**
  * Сервер -> клиент. Сообщает HUD, в каком состоянии забег.
  *
- * @param state     одно из CLEAR / RUNNING / FINISHED / CANCELLED
- * @param item      предмет-цель
- * @param elapsedMs для FINISHED / CANCELLED - итоговое время в миллисекундах
+ * @param state       одно из CLEAR / RUNNING / FINISHED / CANCELLED
+ * @param item        предмет-цель
+ * @param elapsedMs   для FINISHED / CANCELLED - итоговое время в миллисекундах
+ * @param challenge   название усложнения или пустая строка
  */
-public record TimerPayload(int state, Item item, long elapsedMs) implements CustomPacketPayload {
+public record TimerPayload(int state, Item item, long elapsedMs, String challenge) implements CustomPacketPayload {
 	public static final int CLEAR = 0;
 	public static final int RUNNING = 1;
 	public static final int FINISHED = 2;
@@ -28,6 +29,7 @@ public record TimerPayload(int state, Item item, long elapsedMs) implements Cust
 			ByteBufCodecs.VAR_INT, TimerPayload::state,
 			ByteBufCodecs.registry(Registries.ITEM), TimerPayload::item,
 			ByteBufCodecs.VAR_LONG, TimerPayload::elapsedMs,
+			ByteBufCodecs.STRING_UTF8, TimerPayload::challenge,
 			TimerPayload::new
 	);
 

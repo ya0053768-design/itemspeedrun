@@ -63,18 +63,17 @@ public final class ItemPool {
 	private static final List<String> DENY_SUFFIX = List.of("_spawn_egg");
 
 	/**
-	 * Выбирает случайный предмет с равной вероятностью среди всех подходящих.
+	 * Все подходящие предметы.
 	 *
-	 * @param features включённые в мире фичи (чтобы не выпадали предметы из отключённых экспериментов)
-	 * @param excluded предметы, которые выпасть не должны (например, уже лежащие в инвентаре)
-	 * @return предмет или null, если подходящих нет
+	 * @param features включённые в мире фичи; null - не проверять (нужно до создания мира)
+	 * @param excluded предметы, которые выпасть не должны
 	 */
-	public static Item pick(FeatureFlagSet features, Predicate<Item> excluded) {
+	public static List<Item> all(FeatureFlagSet features, Predicate<Item> excluded) {
 		Set<String> custom = loadCustomDeny();
 		List<Item> pool = new ArrayList<>();
 
 		for (Item item : BuiltInRegistries.ITEM) {
-			if (!item.isEnabled(features)) {
+			if (features != null && !item.isEnabled(features)) {
 				continue;
 			}
 			Identifier id = BuiltInRegistries.ITEM.getKey(item);
@@ -94,7 +93,12 @@ public final class ItemPool {
 			}
 			pool.add(item);
 		}
+		return pool;
+	}
 
+	/** Случайный предмет с равной вероятностью среди всех подходящих; null, если таких нет. */
+	public static Item pick(FeatureFlagSet features, Predicate<Item> excluded) {
+		List<Item> pool = all(features, excluded);
 		if (pool.isEmpty()) {
 			return null;
 		}
